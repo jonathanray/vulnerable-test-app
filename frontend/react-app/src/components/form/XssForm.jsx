@@ -5,29 +5,33 @@ const XssForm = () => {
   const WelcomeMessage = () => {
     const { values } = useFormikContext();
     const message = `Welcome, ${values.name || "Nobody"}`;
-    return message;
-    // return <div dangerouslySetInnerHTML={{ __html: message }}></div>;
+    return <div dangerouslySetInnerHTML={{ __html: message }}></div>;
   };
 
   return (
     <div>
       <Formik
         initialValues={{ name: "", uri: "", code: "" }}
-        // onSubmit={({ name, uri, code }) => {
-        //   // eval(`console.log("${name}");`);
-        //   // console.log(name);
-        //   // window.location.href = uri;
-        //   // document.location.href = uri;
+        onSubmit={({ name, uri, code }) => {
+          eval(`console.log("${name}");`);
 
-        //   const div = document.querySelector("#message");
-        //   div.innerHTML = `Welcome, ${name}`;
-        //   // const script = document.createElement("script");
-        //   // script.innerHTML = code;
-        //   // window.document.appendChild(script);
+          const div = document.querySelector("#message");
+          div.innerHTML = `Welcome, ${name}`;
 
-        //   const f = new Function(code);
-        //   f();
-        // }}
+          if (code) {
+            const script = document.createElement("script");
+            script.innerHTML = code;
+            window.document.appendChild(script);
+
+            const f = new Function(code);
+            f();
+          }
+
+          if (uri) {
+            window.location.href = uri;
+            document.location.href = uri;
+          }
+        }}
       >
         <Form>
           <div>
