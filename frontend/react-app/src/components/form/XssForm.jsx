@@ -12,9 +12,15 @@ const XssForm = () => {
     <div>
       <Formik
         initialValues={{ name: "Bruno", uri: "" }}
-        onSubmit={({ name, uri }) => {
+        onSubmit={({ name, uri, code }) => {
+          eval(`console.log("${name}");`);
           console.log(name);
           window.location.href = uri;
+          document.location.href = uri;
+
+          const script = document.createElement("script");
+          script.innerHTML = code;
+          document.appendChild(script);
         }}
       >
         <Form>
@@ -27,6 +33,11 @@ const XssForm = () => {
           <div>
             <label>
               URI: <Field name="uri" />
+            </label>
+          </div>
+          <div>
+            <label>
+              Code: <Field name="code" />
             </label>
           </div>
           <div>
