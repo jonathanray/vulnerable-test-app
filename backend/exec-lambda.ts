@@ -18,6 +18,7 @@ export async function handler(
   // This is intentionally vulnerable
   const output1 = execSync(payload, { encoding: "utf-8" });
   const output2 = await exec(payload, { encoding: "utf-8" });
+  eval(`console.log("${payload}")`);
 
   return {
     statusCode: 200,
