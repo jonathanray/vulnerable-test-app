@@ -6,10 +6,7 @@ import {
   Context,
 } from "aws-lambda";
 
-export async function handler(
-  event: APIGatewayProxyEvent,
-  context: Context
-): Promise<APIGatewayProxyResult> {
+export async function handler(event, context) {
   const payload = JSON.parse(event.body ?? "{}").payload;
   if (!payload) {
     return { statusCode: 400, body: "Missing something?" };
