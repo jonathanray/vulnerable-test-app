@@ -32,7 +32,8 @@ jobs:
         with:
           languages: javascript, csharp
           queries: security-and-quality
-          packs: codeql/javascript-experimental-atm-queries
+          # "Please make sure that every branch in on.pull_request is also in on.push so that Code Scanning can compare pull requests against the state of the base branch."
+          # packs: codeql/javascript-experimental-atm-queries
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below).
