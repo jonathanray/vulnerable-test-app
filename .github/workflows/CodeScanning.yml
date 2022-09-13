@@ -1,15 +1,25 @@
 name: "Code Scanning - Action"
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
 jobs:
   CodeQL-Build:
     # CodeQL runs on ubuntu-latest, windows-latest, and macos-latest
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript
+          - csharp
 
     permissions:
       # required for all workflows
@@ -22,22 +32,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        # with:
-        #   ref: ${{ github.head_ref }}
-        #   fetch-depth: 0
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: csharp
-          queries: security-and-quality
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql/${{ matrix.language }}-config.yml
+          # queries: security-extended
+          # queries: security-and-quality
+
           # "Please make sure that every branch in on.pull_request is also in on.push so that Code Scanning can compare pull requests against the state of the base branch."
           # packs: codeql/javascript-experimental-atm-queries
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below).
       - name: Autobuild
+        if: ${{ matrix.language == 'csharp' }}
         uses: github/codeql-action/autobuild@v2
 
       # ℹ️ Command-line programs to run using the OS shell.

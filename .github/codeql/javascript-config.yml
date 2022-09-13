@@ -1,0 +1,12 @@
+name: "JS/TS CodeQL config"
+# packs:
+#   - codeql/javascript-experimental-atm-queries
+queries:
+  - uses: security-extended
+# - uses: security-and-quality
+paths:
+  - backend
+  - frontend
+# paths-ignore:
+#   - tests
+#   - lib
