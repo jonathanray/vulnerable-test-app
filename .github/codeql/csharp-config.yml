@@ -1,0 +1,9 @@
+name: "C# CodeQL config"
+queries:
+  - uses: security-extended
+# - uses: security-and-quality
+paths:
+  - dvcsharp-api
+# paths-ignore:
+#   - tests
+#   - lib
