@@ -30,7 +30,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: javascript
+          languages: javascript, csharp
           queries: security-and-quality
           packs: codeql/javascript-experimental-atm-queries
 
