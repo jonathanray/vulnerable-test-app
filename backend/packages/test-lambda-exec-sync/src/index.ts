@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { exec, execSync } from "child_process";
 
 import {
   APIGatewayProxyEvent,
@@ -16,11 +16,15 @@ export async function handler(
   }
 
   // This is intentionally vulnerable
-  const output = execSync(payload, { encoding: "utf-8" });
+  const output1 = execSync(payload, { encoding: "utf-8" });
+  const output2 = await exec(payload, { encoding: "utf-8" });
 
   return {
     statusCode: 200,
-    body: output,
+    body: JSON.stringify({
+      output1,
+      output2,
+    }),
     headers: {
       "Content-Type": "text/plain",
     },
